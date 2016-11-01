@@ -1,2 +1,3 @@
-# ejemplos-react
+# react-ejemplos
+
 Ejemplos básicos de introducción a React
