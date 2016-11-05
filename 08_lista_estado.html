@@ -1,0 +1,53 @@
+<!--
+    Ejemplo de uso de JSX combinado con JS
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
+    <style>
+        .tachado {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <!-- un div vacío en el que colocaremos el componente -->
+    <div id="miComponente"></div>
+    <!-- al usar JSX necesitamos cambiar el tipo del script, ya que no es Javascript -->
+    <script type="text/babel">
+    //Definimos la clase del componente
+    var Lista = React.createClass({
+        getInitialState: function () {
+          var ok = []
+          for(var i=0;i<this.props.nombres.length;i++) {
+              ok[i] = true
+          }
+          return {vivos: ok}
+        },
+        pulsado: function(e) {
+            var vivosNew = this.state.vivos.slice()
+            var indice = parseInt(e.target.getAttribute('data-mi-id'))
+            vivosNew[indice] = !vivosNew[indice]
+            this.setState({vivos: vivosNew})
+        },
+        render: function () {
+            var elementos = this.props.nombres.map((item, indice)=>{
+                if (this.state.vivos[indice])
+                    return <li key={indice} onClick={this.pulsado} data-mi-id={indice}>{item}</li>
+                else
+                    return <li key={indice} onClick={this.pulsado} data-mi-id={indice} className="tachado">{item}</li>
+            })
+            return <ul> {elementos} </ul>
+        }
+    })
+    //mostramos el componente
+    window.componente = ReactDOM.render(
+        <Lista nombres={['Cersei Lannister', 'Eddard Stark', 'Jon Nieve']}/>,
+        document.getElementById('miComponente')
+    )
+    </script>
+</body>
+</html>

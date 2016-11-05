@@ -1,5 +1,7 @@
 <!--
-    Ejemplo de uso de JSX combinado con JS
+    Ejemplo de uso de JSX. En este caso se hace la traducción JSX->Javascript con una librería
+    llamada babel-standalone, que no necesita de ninguna herramienta adicional ya que la hace el propio
+    navegador.
 -->
 <html>
 <head>
@@ -15,18 +17,20 @@
     <!-- al usar JSX necesitamos cambiar el tipo del script, ya que no es Javascript -->
     <script type="text/babel">
     //Definimos la clase del componente
-    var miComponente = React.createClass({
+    <!-- CUIDADO!!: los componentes React que queramos referenciar con JSX deben comenzar por mayúsculas -->
+    var MiComponente = React.createClass({
         render: function () {
-            var elementos = []
-            for(i=0; i<this.props.nombres.length; i++) {
-                elementos.push(<li>{this.props.nombres[i]}</li>)
-            }
-            return <ul> {elementos} </ul>
+            return <div>
+                <h1>Otro componente más</h1>
+                <p> {this.props.saludo} soy otro componente React más, pero ahora uso JSX </p>
+            </div>
         }
     })
     //mostramos el componente
     ReactDOM.render(
-        React.createElement(miComponente, {nombres: ['Cersei Lannister', 'Eddard Stark', 'Jon Nieve']}),  //pasamos las propiedades del componente
+        //creamos la instancia del componente al estilo HTML.
+        // Los atributos de "props" se pasan como atributos HTML
+        <MiComponente saludo="¿Qué tal?,"/>,
         document.getElementById('miComponente')
     )
     </script>

@@ -1,0 +1,63 @@
+<!--
+    Ejemplo de uso de JSX combinado con JS
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
+    <style>
+        .tachado {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+<!-- un div vacío en el que colocaremos el componente -->
+<div id="miComponente"></div>
+<!-- al usar JSX necesitamos cambiar el tipo del script, ya que no es Javascript -->
+<script type="text/babel">
+    //Definimos la clase del componente
+    var Item = React.createClass({
+        pulsado: function() {
+            this.props.handleClick(this.props.id)
+        },
+        render: function() {
+            if (this.props.vivo)
+                return <li onClick={this.pulsado}>{this.props.nombre}</li>
+            else
+                return <li onClick={this.pulsado} className="tachado">{this.props.nombre}</li>
+
+        }
+    })
+    var Lista = React.createClass({
+        getInitialState: function () {
+          var vivos = new Array(this.props.nombres.length)
+          vivos.fill(true)
+          console.log(vivos)
+          return {vivos: vivos}
+        },
+        toggle: function(id) {
+          var vivosNew = this.state.vivos.slice()
+          vivosNew[id] = !vivosNew[id]
+          this.setState({vivos: vivosNew})
+        },
+        render: function () {
+            var elementos = this.props.nombres.map((dato, indice)=>{
+                return <Item id={indice} key={indice}
+                             nombre={dato} vivo={this.state.vivos[indice]}
+                             handleClick={this.toggle}/>
+            })
+            return <ul> {elementos} </ul>
+        }
+    })
+
+    //mostramos el componente
+    ReactDOM.render(
+            <Lista nombres={['Cersei Lannister', 'Eddard Stark', 'Jon Nieve']}/>,
+            document.getElementById('miComponente')
+    )
+</script>
+</body>
+</html>

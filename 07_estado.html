@@ -1,7 +1,5 @@
 <!--
-    Ejemplo de uso de JSX. En este caso se hace la traducción JSX->Javascript con una librería
-    llamada babel-standalone, que no necesita de ninguna herramienta adicional ya que la hace el propio
-    navegador.
+    Ejemplo de uso de JSX combinado con JS
 -->
 <html>
 <head>
@@ -9,7 +7,11 @@
     <script src="https://unpkg.com/react@15/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
-
+    <style>
+        .tachado {
+            text-decoration: line-through;
+        }
+    </style>
 </head>
 <body>
     <!-- un div vacío en el que colocaremos el componente -->
@@ -17,17 +19,23 @@
     <!-- al usar JSX necesitamos cambiar el tipo del script, ya que no es Javascript -->
     <script type="text/babel">
     //Definimos la clase del componente
-    var miComponente = React.createClass({
+    var MiBoton = React.createClass({
+        getInitialState: function () {
+          return {veces:0}
+        },
+        pulsado: function() {
+            this.setState({veces: this.state.veces+1})
+        },
         render: function () {
             return <div>
-                <h1>Otro componente más</h1>
-                <p> {this.props.saludo} soy otro componente React más, pero ahora uso JSX </p>
-            </div>
+                     <input type="button" value={this.props.mensaje} onClick={this.pulsado}/>
+                         Veces pulsado: {this.state.veces}
+                   </div>
         }
     })
     //mostramos el componente
     ReactDOM.render(
-        React.createElement(miComponente, {saludo: 'Qué tal,'}),  //pasamos las propiedades del componente
+        <MiBoton mensaje="¡Púlsame!"/>
         document.getElementById('miComponente')
     )
     </script>

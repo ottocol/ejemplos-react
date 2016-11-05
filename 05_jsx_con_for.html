@@ -15,17 +15,18 @@
     <!-- al usar JSX necesitamos cambiar el tipo del script, ya que no es Javascript -->
     <script type="text/babel">
     //Definimos la clase del componente
-    var personajes = React.createClass({
+    var MiComponente = React.createClass({
         render: function () {
-            var elementos = this.props.nombres.map(function (item) {
-                return <li>{item}</li>
-            })
+            var elementos = []
+            for(var i=0; i<this.props.nombres.length; i++) {
+                elementos.push(<li key={i}>{this.props.nombres[i]}</li>)
+            }
             return <ul> {elementos} </ul>
         }
     })
     //mostramos el componente
     ReactDOM.render(
-        React.createElement(miComponente, {nombres: ['Cersei Lannister', 'Eddard Stark', 'Jon Nieve']}),  //pasamos las propiedades del componente
+        <MiComponente nombres={['Cersei Lannister', 'Eddard Stark', 'Jon Nieve']}/>,
         document.getElementById('miComponente')
     )
     </script>
