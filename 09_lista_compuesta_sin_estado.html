@@ -7,7 +7,11 @@
     <script src="https://unpkg.com/react@15/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
-
+    <style>
+        .tachado {
+            text-decoration: line-through;
+        }
+    </style>
 </head>
 <body>
     <!-- un div vacío en el que colocaremos el componente -->
@@ -15,17 +19,23 @@
     <!-- al usar JSX necesitamos cambiar el tipo del script, ya que no es Javascript -->
     <script type="text/babel">
     //Definimos la clase del componente
-    var miComponente = React.createClass({
+    var Item = React.createClass({
+        render: function() {
+            return <li>{this.props.nombre}</li>
+        }
+    })
+    var Lista = React.createClass({
         render: function () {
-            var elementos = this.props.nombres.map(function (item) {
-                return <li>{item}</li>
+            var elementos = this.props.nombres.map(function(dato, indice){
+                return <Item id={indice} key={indice} nombre={dato}/>
             })
             return <ul> {elementos} </ul>
         }
     })
+
     //mostramos el componente
     ReactDOM.render(
-        React.createElement(miComponente, {nombres: ['Cersei Lannister', 'Eddard Stark', 'Jon Nieve']}),  //pasamos las propiedades del componente
+        <Lista nombres={['Cersei Lannister', 'Eddard Stark', 'Jon Nieve']}/>,
         document.getElementById('miComponente')
     )
     </script>
