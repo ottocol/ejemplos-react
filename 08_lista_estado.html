@@ -34,12 +34,13 @@
             this.setState({vivos: vivosNew})
         },
         render: function () {
-            var elementos = this.props.nombres.map((item, indice)=>{
-                if (this.state.vivos[indice])
-                    return <li key={indice} onClick={this.pulsado} data-mi-id={indice}>{item}</li>
+            var elementos = [];
+            for(var i=0; i<this.props.nombres.length; i++) {
+                if (this.state.vivos[i])
+                    elementos.push(<li key={i} onClick={this.pulsado} data-mi-id={i}>{this.props.nombres[i]}</li>)
                 else
-                    return <li key={indice} onClick={this.pulsado} data-mi-id={indice} className="tachado">{item}</li>
-            })
+                    elementos.push(<li key={i} onClick={this.pulsado} data-mi-id={i} className="tachado">{this.props.nombres[i]}</li>)
+            }
             return <ul> {elementos} </ul>
         }
     })
