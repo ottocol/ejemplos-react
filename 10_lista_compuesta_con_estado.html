@@ -45,12 +45,18 @@
           this.setState({vivos: vivosNew})
         },
         render: function () {
-            var elementos = this.props.nombres.map((dato, indice)=>{
-                return <Item id={indice} key={indice}
-                             nombre={dato} vivo={this.state.vivos[indice]}
-                             handleClick={this.toggle}/>
-            })
-            return <ul> {elementos} </ul>
+            var elementos = []
+            for(var i=0; i<this.props.nombres.length;i++) {
+                elementos.push(<Item id={i}
+                                     key={i}
+                                     nombre={this.props.nombres[i]}
+                                     vivo={this.state.vivos[i]}
+                                     handleClick={this.toggle}/>)
+            }
+            return  <div>
+                      <h2>Pulsa sobre un item para cambiar estado</h2>
+                      <ul> {elementos} </ul>
+                    </div>
         }
     })
 
