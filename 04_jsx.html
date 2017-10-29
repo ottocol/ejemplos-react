@@ -6,10 +6,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="https://unpkg.com/react@15/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
-
+    <script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 <body>
     <!-- un div vacío en el que colocaremos el componente -->
@@ -17,15 +16,15 @@
     <!-- al usar JSX necesitamos cambiar el tipo del script, ya que no es Javascript -->
     <script type="text/babel">
     //Definimos la clase del componente
-    <!-- CUIDADO!!: los componentes React que queramos referenciar con JSX deben comenzar por mayúsculas -->
-    var MiComponente = React.createClass({
-        render: function () {
+    //CUIDADO!!: los componentes React que queramos referenciar con JSX deben comenzar por mayúsculas -->
+    class MiComponente extends React.Component {
+        render() {
             return <div>
                 <h1>Otro componente más</h1>
                 <p> {this.props.saludo} soy otro componente React más, pero ahora uso JSX </p>
             </div>
         }
-    })
+    }
     //mostramos el componente
     ReactDOM.render(
         //creamos la instancia del componente al estilo HTML.

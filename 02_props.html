@@ -6,23 +6,26 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="https://unpkg.com/react@15/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+    <!--
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    -->
 </head>
 <body>
     <!-- un div vacío en el que colocaremos el componente -->
     <div id="miComponente"></div>
     <script>
     //Definimos la clase del componente
-    var miComponente = React.createClass({
-        render: function () {
+    class MiComponente extends React.Component {
+        render() {
             //en el componente las propiedades son accesibles a través de "props"
             return React.createElement('h1', null, this.props.saludo + " soy tu segundo componente React")
         }
-    })
+    }
     //mostramos el componente
     ReactDOM.render(
-        React.createElement(miComponente, {saludo: 'Qué tal,'}),  //pasamos las propiedades del componente
+        React.createElement(MiComponente, {saludo: 'Qué tal,'}),  //pasamos las propiedades del componente
         document.getElementById('miComponente')
     )
     </script>
