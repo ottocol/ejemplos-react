@@ -5,9 +5,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="https://unpkg.com/react@15/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <style>
         .tachado {
             text-decoration: line-through;
@@ -20,19 +20,19 @@
     <!-- al usar JSX necesitamos cambiar el tipo del script, ya que no es Javascript -->
     <script type="text/babel">
     //Definimos la clase del componente
-    var Item = React.createClass({
-        render: function() {
+    class Item extends React.Component {
+        render() {
             return <li>{this.props.nombre}</li>
         }
-    })
-    var Lista = React.createClass({
-        render: function () {
+    }
+    class Lista extends React.Component {
+        render() {
             var elementos = this.props.nombres.map(function(dato, indice){
                 return <Item id={indice} key={indice} nombre={dato}/>
             })
             return <ul> {elementos} </ul>
         }
-    })
+    }
 
     //mostramos el componente
     ReactDOM.render(

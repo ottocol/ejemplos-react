@@ -1,12 +1,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="https://unpkg.com/react@15/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
-    <!-- Solo si necesitamos usar JSX/ES2015-->
-    <!--
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
-    -->
+    <script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
 </head>
 <body>
     <!-- un div vacío en el que colocaremos el componente -->
@@ -14,12 +10,12 @@
     <script>
     //Definimos la clase del componente
     //En las propiedades de la clase como mínimo debe haber una función 'render' que devuelva el HTML del componente
-    var miComponente = React.createClass({
-        render: function () {
+    class MiComponente extends React.Component {
+        render(){
             //el segundo parámetro son las propiedades del componente, este al ser muy simple no tiene :)
             return React.createElement('h1', null, "Hola, soy tu primer componente React")
         }
-    })
+    }
     //mostramos el componente
     ReactDOM.render(
         React.createElement(miComponente),      //necesitamos una instancia

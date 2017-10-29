@@ -4,14 +4,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="https://unpkg.com/react@15/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
-    <style>
-        .tachado {
-            text-decoration: line-through;
-        }
-    </style>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 <body>
     <!-- un div vacío en el que colocaremos el componente -->
@@ -19,20 +14,21 @@
     <!-- al usar JSX necesitamos cambiar el tipo del script, ya que no es Javascript -->
     <script type="text/babel">
     //Definimos la clase del componente
-    var MiBoton = React.createClass({
-        getInitialState: function () {
-          return {veces:0}
-        },
-        pulsado: function() {
+    class MiBoton extends React.Component {
+        constructor(props) {
+            super(props)
+            this.state = {veces:0}
+        }
+        pulsado() {
             this.setState({veces: this.state.veces+1})
-        },
-        render: function () {
+        }
+        render() {
             return <div>
-                     <input type="button" value={this.props.mensaje} onClick={this.pulsado}/>
-                         Veces pulsado: {this.state.veces}
+                     <input type="button" value={this.props.mensaje} onClick={this.pulsado.bind(this)}/>
+                     <div>Veces pulsado: {this.state.veces}</div>
                    </div>
         }
-    })
+    }
     //mostramos el componente
     ReactDOM.render(
         <MiBoton mensaje="¡Púlsame!"/>,

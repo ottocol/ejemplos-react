@@ -1,25 +1,25 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="https://unpkg.com/react@15/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
 </head>
 <body>
     <!-- un div vacío en el que colocaremos el componente -->
     <div id="miComponente"></div>
     <script>
     //Definimos la clase del componente
-    var miComponente = React.createClass({
-        render: function () {
+    class MiComponente extends React.Component {
+        render() {
             return React.createElement('div', null, [
                    React.createElement('h1', null, "Otro componente React"),
                    React.createElement('p', null, "Pero ahora formado por varias etiquetas")
             ])
         }
-    })
+    }
     //mostramos el componente
     ReactDOM.render(
-        React.createElement(miComponente),
+        React.createElement(MiComponente),
         document.getElementById('miComponente')
     )
     </script>

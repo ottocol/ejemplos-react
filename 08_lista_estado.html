@@ -4,9 +4,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="https://unpkg.com/react@15/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <style>
         .tachado {
             text-decoration: line-through;
@@ -19,31 +19,30 @@
     <!-- al usar JSX necesitamos cambiar el tipo del script, ya que no es Javascript -->
     <script type="text/babel">
     //Definimos la clase del componente
-    var Lista = React.createClass({
-        getInitialState: function () {
-          var ok = []
-          for(var i=0;i<this.props.nombres.length;i++) {
-              ok[i] = true
-          }
-          return {vivos: ok}
-        },
-        pulsado: function(e) {
+    class Lista extends React.Component {
+        constructor(props) {
+          super(props)  
+          var ok = new Array(this.props.nombres.length)
+          ok.fill(true)
+          this.state = {vivos: ok}
+        }
+        pulsado(e) {
             var vivosNew = this.state.vivos.slice()
             var indice = parseInt(e.target.getAttribute('data-mi-id'))
             vivosNew[indice] = !vivosNew[indice]
             this.setState({vivos: vivosNew})
-        },
-        render: function () {
+        }
+        render() {
             var elementos = [];
             for(var i=0; i<this.props.nombres.length; i++) {
                 if (this.state.vivos[i])
-                    elementos.push(<li key={i} onClick={this.pulsado} data-mi-id={i}>{this.props.nombres[i]}</li>)
+                    elementos.push(<li key={i} onClick={this.pulsado.bind(this)} data-mi-id={i}>{this.props.nombres[i]}</li>)
                 else
-                    elementos.push(<li key={i} onClick={this.pulsado} data-mi-id={i} className="tachado">{this.props.nombres[i]}</li>)
+                    elementos.push(<li key={i} onClick={this.pulsado.bind(this)} data-mi-id={i} className="tachado">{this.props.nombres[i]}</li>)
             }
             return <ul> {elementos} </ul>
         }
-    })
+    }
     //mostramos el componente
     window.componente = ReactDOM.render(
         <Lista nombres={['Cersei Lannister', 'Eddard Stark', 'Jon Nieve']}/>,

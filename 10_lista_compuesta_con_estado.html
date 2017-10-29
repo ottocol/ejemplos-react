@@ -6,9 +6,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="https://unpkg.com/react@15/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <style>
         .tachado {
             text-decoration: line-through;
@@ -21,44 +21,44 @@
 <!-- al usar JSX necesitamos cambiar el tipo del script, ya que no es Javascript -->
 <script type="text/babel">
     //Definimos la clase del componente
-    var Item = React.createClass({
-        pulsado: function() {
+    class Item extends React.Component {
+        pulsado() {
             this.props.handleClick(this.props.id)
-        },
-        render: function() {
-            if (this.props.vivo)
-                return <li onClick={this.pulsado}>{this.props.nombre}</li>
-            else
-                return <li onClick={this.pulsado} className="tachado">{this.props.nombre}</li>
-
         }
-    })
-    var Lista = React.createClass({
-        getInitialState: function () {
+        render() {
+            if (this.props.vivo)
+                return <li onClick={this.pulsado.bind(this)}>{this.props.nombre}</li>
+            else
+                return <li onClick={this.pulsado.bind(this)} className="tachado">{this.props.nombre}</li>
+        }
+    }
+    class Lista extends React.Component {
+        constructor(props) {
+          super(props)  
           var vivos = new Array(this.props.nombres.length)
           vivos.fill(true)
-          return {vivos: vivos}
-        },
-        toggle: function(id) {
-          var vivosNew = this.state.vivos.slice()
-          vivosNew[id] = !vivosNew[id]
-          this.setState({vivos: vivosNew})
-        },
-        render: function () {
+          this.state = {vivos: vivos}
+        }
+        toggle(id) {
+          var vivos = this.state.vivos
+          vivos[id] = !vivos[id]
+          this.setState({vivos: vivos})
+        }
+        render() {
             var elementos = []
             for(var i=0; i<this.props.nombres.length;i++) {
                 elementos.push(<Item id={i}
                                      key={i}
                                      nombre={this.props.nombres[i]}
                                      vivo={this.state.vivos[i]}
-                                     handleClick={this.toggle}/>)
+                                     handleClick={this.toggle.bind(this)}/>)
             }
             return  <div>
                       <h2>Pulsa sobre un item para cambiar estado</h2>
                       <ul> {elementos} </ul>
                     </div>
         }
-    })
+    }
 
     //mostramos el componente
     ReactDOM.render(
