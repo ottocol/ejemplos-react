@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="componente"></div>  
+  <script type="text/babel">
+     class GithubAPI {
+         getUser(nombre) {
+             return fetch('https://api.github.com/users/'+nombre)
+               .then(function(respuesta){
+                   return respuesta.json()
+               })
+         }
+     }
+
+     class GithubProfile extends React.Component {
+        constructor(props) {
+            super(props)
+            this.state = {}
+        }
+        //Este método se llama cuando el componente se ha insertado en la página
+        componentDidMount() {
+            var api = new GithubAPI()
+            api.getUser(this.props.login)
+              //La "Fat arrow" es importante aquí porque
+              //conseguimos que "this" sea el objeto actual.
+              //Las funciones de este tipo tienen "vinculación léxica"
+              //y no usan this "dinámico"
+              .then(datos =>
+                  this.setState({usuario: datos})
+              )
+        }
+        render() {
+            if (!this.state.usuario) {
+                return <div>No hay datos que mostrar</div>
+            }
+            else {
+                return <div>
+                  <h1>{this.state.usuario.name}</h1>
+                  <img src={this.state.usuario.avatar_url}/>
+                </div>
+            }
+        }
+     }
+     ReactDOM.render(
+          <GithubProfile login="octocat"/>,
+          document.getElementById("componente"))
+
+          
+  </script>
+</body>
+</html>    
