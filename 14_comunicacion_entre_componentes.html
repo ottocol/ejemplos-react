@@ -10,6 +10,8 @@
     <div id="formulario"></div> 
     <div id="lista"></div>       
     <script type="text/babel">
+      //nos permite emitir y recibir eventos arbitrarios
+      //(definidos por nosotros)
       var ee = new EventEmitter()
 
       class NuevoItem extends React.Component {
@@ -25,6 +27,8 @@
          } 
 
          insertarItem() {
+           //emitimos un evento con nombre arbitrario
+           //los parámetros que recibirán los listener se ponen en un array, por si hay varios  
            ee.emitEvent('nuevoItem',[this.state.item])  
          }
 
@@ -44,6 +48,7 @@
         }  
 
         componentDidMount() {
+            //queremos recibir el evento "nuevoItem"
             ee.addListener('nuevoItem', (nombre)=>{
                 var items_old = this.state.items
                 items_old.push(nombre)
