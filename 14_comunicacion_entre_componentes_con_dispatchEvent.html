@@ -1,0 +1,75 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="formulario"></div> 
+    <div id="lista"></div>       
+    <script type="text/babel">
+
+      class NuevoItem extends React.Component {
+         constructor(props) {
+           super(props)
+           this.state = {item:""}
+           this.changeItem = this.changeItem.bind(this)
+           this.insertarItem = this.insertarItem.bind(this)
+         } 
+
+         changeItem(evento) {
+           this.setState({item:evento.target.value})
+         } 
+
+         insertarItem() {
+           //En el campo 'detail' podemos pasar información personalizada,
+           //en este caso el nombre del item 
+           var evento = new CustomEvent('nuevoItem', {detail: this.state.item})
+           document.body.dispatchEvent(evento)
+         }
+
+         render() {
+            return <div>
+              <h1>Nuevo item</h1>
+              <input type="text" value={this.state.item} onChange={this.changeItem}/>
+              <button onClick={this.insertarItem}>Insertar</button>
+            </div>
+         } 
+      }
+
+      class ListaCompra extends React.Component {
+        constructor(props) {
+          super(props)
+          this.state = {items: props.items}  
+        }  
+
+        componentDidMount() {
+            document.body.addEventListener('nuevoItem', (evento)=>{
+                var items_old = this.state.items
+                items_old.push(evento.detail)
+                this.setState({items: items_old})
+            })
+        }
+
+        render() {
+            var elementos = this.state.items.map((dato,id) => <li key={id}>{dato}</li>)
+            return <div> 
+              <h1>Lista de la compra</h1> 
+              <ul>{elementos}</ul>
+            </div>  
+        }
+      }
+
+      var datos = ["Tomates", "Pan", "Nocilla", "Manzanas"]
+      ReactDOM.render(
+          <ListaCompra items={datos}/>,
+          document.getElementById("lista")
+      )
+      ReactDOM.render(
+          <NuevoItem/>,
+          document.getElementById("formulario")
+      )
+    </script>
+</body>
+</html>    
